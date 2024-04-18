@@ -1,9 +1,11 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ToledoCW.Services.Infraestructure;
 using ToledoCW.Services.Infraestructure.Entidades;
 using ToledoCW.Services.Infraestructure.Repositorios;
 using ToledoCW.Services.Model;
 using ToledoCW.Services.Model.Request;
+using ToledoCW.Services.Model.Response;
 
 namespace ToledoCW.Services.Controllers;
 
@@ -11,13 +13,14 @@ namespace ToledoCW.Services.Controllers;
 [Route("[controller]")]
 public class AtendenteController : ApiBaseController
 {
-    private readonly AtendenteRepositorio _Repositorio;
-    
-    public AtendenteController()
+    private readonly IRepositorioBase<Atendente> _Repositorio;
+    private readonly IMapper _Mapper;
+
+    public AtendenteController(IRepositorioBase<Atendente> repositorio, )
     {
-        _Repositorio = new AtendenteRepositorio(new ToledoCWContext());
+        _Repositorio = repositorio;
     }
-    
+
     /// <summary>
     /// Obter todos atendentes.
     /// </summary>
@@ -28,9 +31,9 @@ public class AtendenteController : ApiBaseController
     public async Task<IActionResult> ObterTodosAtendente()
     {
         var _obj = await _Repositorio.GetAll();
-        return Response(_obj);
+        return Response(Response(_Mapper.M);
     }
-    
+
     /// <summary>
     /// Obter atendente por id.
     /// </summary>
@@ -57,8 +60,8 @@ public class AtendenteController : ApiBaseController
         {
             Nome = request.Nome
         });
-        
-        return Response(_obj);
+
+        return Response(_Mapper.Map<ApiResponseAtendente>(_obj));
     }
 
     /// <summary>
@@ -75,7 +78,7 @@ public class AtendenteController : ApiBaseController
             Id = request.Id,
             Nome = request.Nome
         });
-        
+
         return Response(_obj);
     }
 
@@ -88,13 +91,13 @@ public class AtendenteController : ApiBaseController
     [HttpDelete("{id:long}")]
     public async Task<IActionResult> ExcluirAtendente(long id)
     {
-        var _obj = await _Repositorio.Get(x => x.Id == id); 
-        
-        if(_obj is null)
+        var _obj = await _Repositorio.Get(x => x.Id == id);
+
+        if (_obj is null)
             return Response(new ApiResponseError("Atendente não encontrado.", "id"));
-        
+
         await _Repositorio.Delete(_obj);
-        
+
         return Response(_obj);
     }
 }

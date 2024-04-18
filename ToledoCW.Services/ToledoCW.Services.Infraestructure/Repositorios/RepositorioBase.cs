@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace ToledoCW.Services.Infraestructure.Repositorios;
 
-public class RepositorioBase<T> where T : class
+public class RepositorioBase<T> : IRepositorioBase<T> where T : class
 {
     protected readonly DbContext DbContext;
     protected readonly DbSet<T> DbSet;
 
-    public RepositorioBase(DbContext dbContext)
+    public RepositorioBase(ToledoCWContext dbContext)
     {
         DbContext = dbContext;
         DbSet = DbContext.Set<T>();
@@ -18,10 +18,10 @@ public class RepositorioBase<T> where T : class
     public async Task<T> Create(T entity)
     {
         await DbSet.AddAsync(entity);
-        
+
         return Commit() ? entity : throw new Exception("Erro ao salvar entidade " + nameof(T));
     }
-    
+
     public async Task<T?> Get(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)
     {
         return await Task.FromResult(GetListQuery(predicate, include, orderBy).FirstOrDefault());
@@ -40,7 +40,7 @@ public class RepositorioBase<T> where T : class
             DbContext.Entry(entity).State = EntityState.Modified;
 
         DbContext.SaveChanges();
-        
+
         return Task.FromResult(entity);
     }
 
@@ -55,7 +55,7 @@ public class RepositorioBase<T> where T : class
         DbContext.SaveChanges();
         return true;
     }
-    
+
     protected IQueryable<T> GetListQuery(Expression<Func<T, bool>> predicate = null,
         Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
         Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null)

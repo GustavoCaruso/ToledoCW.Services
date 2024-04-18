@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using ToledoCW.Services.Infraestructure;
+using ToledoCW.Services.Infraestructure.Repositorios;
 using ToledoCW.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +22,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IEstabelecimentoService, EstabelecimentoService>();
-
+builder.Services.AddScoped(typeof(IRepositorioBase<>),typeof(RepositorioBase<>));
+builder.Services.AddDbContext<ToledoCWContext>(options =>
+{
+    options.UseMySQL(builder.Configuration.GetConnectionString("Mysql"));
+});
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
