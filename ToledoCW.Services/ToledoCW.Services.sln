@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToledoCW.Services.Applicati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToledoCW.Services.Core", "..\src\ToledoCW.Services.Core\ToledoCW.Services.Core.csproj", "{C80F7161-C8FA-4110-BF56-21CB18DCB6CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToledoCW.Services.UnitTest.Domain", "..\tests\ToledoCW.Services.UnitTest.Domain\ToledoCW.Services.UnitTest.Domain.csproj", "{7B23542E-A160-46DD-971C-60E431CE2F7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C80F7161-C8FA-4110-BF56-21CB18DCB6CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C80F7161-C8FA-4110-BF56-21CB18DCB6CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C80F7161-C8FA-4110-BF56-21CB18DCB6CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B23542E-A160-46DD-971C-60E431CE2F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B23542E-A160-46DD-971C-60E431CE2F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B23542E-A160-46DD-971C-60E431CE2F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B23542E-A160-46DD-971C-60E431CE2F7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
