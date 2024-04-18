@@ -16,9 +16,10 @@ public class AtendenteController : ApiBaseController
     private readonly IRepositorioBase<Atendente> _Repositorio;
     private readonly IMapper _Mapper;
 
-    public AtendenteController(IRepositorioBase<Atendente> repositorio, )
+    public AtendenteController(IRepositorioBase<Atendente> repositorio, IMapper mapper)
     {
         _Repositorio = repositorio;
+        _Mapper = mapper;
     }
 
     /// <summary>
@@ -31,7 +32,7 @@ public class AtendenteController : ApiBaseController
     public async Task<IActionResult> ObterTodosAtendente()
     {
         var _obj = await _Repositorio.GetAll();
-        return Response(Response(_Mapper.M);
+        return Response(_Mapper.Map<List<ApiResponseAtendente>>(_obj));
     }
 
     /// <summary>
