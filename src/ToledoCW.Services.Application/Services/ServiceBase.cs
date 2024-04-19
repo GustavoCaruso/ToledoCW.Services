@@ -60,11 +60,11 @@ public abstract class ServiceBase : IService
 
 public abstract class ServiceBase<TEntity> : ServiceBase, IService<TEntity> where TEntity : class
 {
-    private readonly RepositorioBase<TEntity> _RepoBase;
+    private readonly IRepositorioBase<TEntity> _RepoBase;
 
-    protected ServiceBase(IServiceProvider serviceProvider) : base(serviceProvider)
+    protected ServiceBase(IServiceProvider serviceProvider, IRepositorioBase<TEntity> repositorio) : base(serviceProvider)
     {
-        _RepoBase = new RepositorioBase<TEntity>(new ToledoCWContext());
+        _RepoBase = repositorio;
     }
 
     // public virtual async Task<TEntity> Save(TEntity obj, bool forced = false)

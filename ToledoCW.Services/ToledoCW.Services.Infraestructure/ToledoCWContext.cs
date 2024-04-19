@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ToledoCW.Services.Domain.Entidades;
 using ToledoCW.Services.Infraestructure.Entidades;
 
 namespace ToledoCW.Services.Infraestructure;
@@ -50,13 +51,13 @@ public class ToledoCWContext : DbContext
 
             builder.HasOne(x => x.EstabelecimentoObj).WithMany().HasForeignKey(x => x.Estabelecimento).IsRequired();
         });
-        
+
         modelBuilder.Entity<Estabelecimento>(builder =>
         {
             builder.ToTable("estabelecimento");
             builder.Property(x => x.Id).IsRequired();
             builder.Property(x => x.Nome).HasMaxLength(100).IsRequired();
-            
+
             builder.HasData(new Estabelecimento
             {
                 Id = 1,
@@ -64,10 +65,19 @@ public class ToledoCWContext : DbContext
             },
             new Estabelecimento
             {
-                Id=2,
+                Id = 2,
                 Nome = "Estabelecimento 2"
             }
             );
         });
+        modelBuilder.Entity<Cliente>(builder =>
+        {
+            builder.ToTable("cliente");
+            builder.Property(x => x.Email).IsRequired();
+            builder.Property(x => x.Nome).IsRequired();
+            builder.Property(x => x.Id).IsRequired();
+            builder.Property(x => x.DataNascimento).IsRequired().HasColumnName("dt_nascimento");
+        }
+        );
     }
 }
